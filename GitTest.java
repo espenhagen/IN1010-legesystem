@@ -31,5 +31,6 @@ public class GitTest{
         System.out.println("Dette er min forste java-commit");
         System.out.println("Endring");
 		System.out.println("Elias sin flmepld");
+        System.out.println("Ahmed gjor endringer ogsaa!");
     }
 }
