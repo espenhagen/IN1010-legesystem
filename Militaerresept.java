@@ -15,6 +15,6 @@ public class Militaerresept extends HvitResept {
 
     @Override
     public String toString() {
-        return "\nType: Militaerresept" + super.toString();
+        return "\nType: Hvit militaerresept" + super.toString();
     }
 }

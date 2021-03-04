@@ -21,6 +21,6 @@ public class HvitResept extends Resept {
     public String toString() {
         return "\nType: Hvit resept"
         + "\nFarge: " + farge() + super.toString()
-        + "\nPris aa betale: " + prisAaBetale();
+        + "\nPris aa betale: " + prisAaBetale() + "\n";
     }
 }

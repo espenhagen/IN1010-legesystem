@@ -35,7 +35,7 @@ abstract public class Resept {
         return utskrivendeLege;
     }
 
-    public int hentPasient() {
+    public Pasient hentPasient() {
         return pasient;
     }
 
@@ -61,8 +61,8 @@ abstract public class Resept {
     public String toString() {
         return "\nId: " + id
         + "\nLegemiddel: " + legemiddel.hentNavn()
-        + "\nLege: " + utskrivendeLege.hentNavn()
+        + "\nLege: " + utskrivendeLege
+        + "\nAntall reit igjen: " + reit
         + "\nPasient: " + pasient;
-        + "\nAntall reit igjen: " + reit;
     }
 }

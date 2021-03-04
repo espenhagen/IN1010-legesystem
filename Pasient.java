@@ -28,7 +28,7 @@ public class Pasient {
         return foedselsNummer;
     }
 
-    public hentId() {
+    public int hentId() {
         return pasientId;
     }
 
@@ -40,4 +40,10 @@ public class Pasient {
         reseptStabel.leggPaa(resept);
     }
 
+    @Override
+    public String toString() {
+        return "Navn: " + navn
+               + "\nFoedselsnummer: " + foedselsNummer
+               + "\nPasient ID: " + pasientId;
+    }
 }

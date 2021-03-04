@@ -15,6 +15,6 @@ public class Lege {
 
     @Override
     public String toString() {
-        return "Legen heter: " + navn + "\n";
+        return "Doctor: " + navn;
     }
 }

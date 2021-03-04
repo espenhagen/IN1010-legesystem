@@ -22,6 +22,6 @@ public class BlaaResept extends Resept {
     public String toString() {
         return "\nType: Blaa resept"
         + "\nFarge: " + farge() + super.toString()
-        + "\nPris aa betale: " + prisAaBetale();
+        + "\nPris aa betale: " + prisAaBetale() + "\n";
     }
 }
