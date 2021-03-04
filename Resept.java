@@ -6,7 +6,7 @@ Inneholder også to abstrakte metoder, farge() og prisAaBetale().
 */
 
 abstract public class Resept {
-    protected static int total;
+    protected static int total = 0;
     protected int id;
     protected Legemiddel legemiddel;
     protected Lege utskrivendeLege;

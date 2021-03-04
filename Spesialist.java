@@ -12,12 +12,13 @@ public class Spesialist extends Lege implements Godkjenningsfritak {
         kontrollId = kId;
     }
 
+    @Override
     public String hentKontrollID() {
         return kontrollId;
     }
 
     @Override
     public String toString() {
-        return "Spesialisten heter: " + navn + "\nKontroll ID: " + kontrollId + "\n";
+        return super.toString() + "\nKontroll ID: " + kontrollId + "\n";
     }
 }
