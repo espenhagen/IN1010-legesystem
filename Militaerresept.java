@@ -4,8 +4,8 @@ Klassen Militaerresept arver fra HvitResept og gir alltid ut gratis respeter, al
 
 public class Militaerresept extends HvitResept {
 
-    public Militaerresept(Legemiddel legemiddel, Lege utskrivendeLege, int pasientId, int reit) {
-        super(legemiddel, utskrivendeLege, pasientId, reit);
+    public Militaerresept(Legemiddel legemiddel, Lege utskrivendeLege, Pasient pas, int reit) {
+        super(legemiddel, utskrivendeLege, pas, reit);
     }
 
     @Override

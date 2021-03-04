@@ -6,8 +6,8 @@ med hjelp av Math.round().
 
 public class BlaaResept extends Resept {
 
-    public BlaaResept(Legemiddel legemiddel, Lege utskrivendeLege, int pasientId, int reit) {
-        super(legemiddel, utskrivendeLege, pasientId, reit);
+    public BlaaResept(Legemiddel legemiddel, Lege utskrivendeLege, Pasient pas, int reit) {
+        super(legemiddel, utskrivendeLege, pas, reit);
     }
 
     public String farge() {

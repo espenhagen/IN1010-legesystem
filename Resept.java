@@ -11,11 +11,12 @@ abstract public class Resept {
     protected Legemiddel legemiddel;
     protected Lege utskrivendeLege;
     protected int pasientId, reit;
+	protected Pasient pasient;
 
-    public Resept(Legemiddel middel, Lege lege, int pId, int rei) {
+    public Resept(Legemiddel middel, Lege lege, Pasient pas, int rei) {
         legemiddel = middel;
         utskrivendeLege = lege;
-        pasientId = pId;
+        pasient = pas;
         reit = rei;
 
         total++;
@@ -34,8 +35,8 @@ abstract public class Resept {
         return utskrivendeLege;
     }
 
-    public int pasientId() {
-        return pasientId;
+    public int hentPasient() {
+        return pasient;
     }
 
     public int hentReit() {
@@ -61,7 +62,7 @@ abstract public class Resept {
         return "\nId: " + id
         + "\nLegemiddel: " + legemiddel.hentNavn()
         + "\nLege: " + utskrivendeLege.hentNavn()
-        + "\nPasient ID: " + pasientId
+        + "\nPasient: " + pasient;
         + "\nAntall reit igjen: " + reit;
     }
 }
