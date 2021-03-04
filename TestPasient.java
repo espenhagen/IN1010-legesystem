@@ -18,9 +18,12 @@ public class TestPasient {
         pasZero.leggTilResept(pRes);
         pasZero.leggTilResept(blaa);
 
-        System.out.println(pasZero);
-        System.out.println();
-        System.out.println(trine);
-        System.out.println("\n" + pasZero.hentReseptStabel());
+        // System.out.println(pasZero);
+        // System.out.println();
+        // System.out.println(trine);
+        // System.out.println("\n" + pasZero.hentReseptStabel());
+        for (Resept resept : pasZero.hentReseptStabel()) {
+            System.out.println(resept);
+        }
     }
 }

@@ -6,7 +6,30 @@ De ulike metodene, tar hensyn til en rekke edge-cases. Disse beskrives i de ulik
 Brukeren av klassen, kan legge til, fjerne og sette verdier lista, både med og uten posisjon.
 */
 
+import java.util.NoSuchElementException;
+import java.util.Iterator;
+
 public class Lenkeliste <T> implements Liste <T> {
+
+    // Privat klasse LenkelisteIterator, som oppretter et Iterator-objekt
+    protected class LenkelisteIterator implements Iterator <T> {
+        Node peker = forste;
+
+        @Override
+        public boolean hasNext() {
+            return peker != null;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Node returneres = peker;
+            peker = peker.neste;
+            return returneres.data;
+        }
+    }
 
     // Private klasse, Node som inneholder en referanse til neste Node, og egen data
     protected class Node {
@@ -169,5 +192,10 @@ public class Lenkeliste <T> implements Liste <T> {
         }
 
         return returneres;
+    }
+
+    @Override
+    public Iterator <T> iterator() {
+        return new LenkelisteIterator();
     }
 }
