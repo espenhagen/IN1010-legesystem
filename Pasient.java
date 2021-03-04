@@ -1,3 +1,10 @@
+/**
+IN1010 - Oblig 4
+Klassen Pasient: Tar inn navn og fødselsnummer. Hver pasient har en unik Id som registreres av klassen.
+I tillegg har hver pasient en liste (stabel) over sine resepter
+Klassen tilbyr hent-metoder, og kan også legge til Resept-objekter i stabelen.
+*/
+
 public class Pasient {
 
     Stabel<Resept> reseptStabel = new Stabel<>();
