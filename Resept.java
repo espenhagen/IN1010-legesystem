@@ -59,7 +59,8 @@ abstract public class Resept {
     // Informasjon om resepten
     @Override
     public String toString() {
-        return "\nId: " + id
+        return "\n ********** RESEPT *********\n" +
+        "\nId: " + id
         + "\nLegemiddel: " + legemiddel.hentNavn()
         + "\nLege: " + utskrivendeLege
         + "\nAntall reit igjen: " + reit
