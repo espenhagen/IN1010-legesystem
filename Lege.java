@@ -68,7 +68,7 @@ public class Lege implements Comparable <Lege> {
 
     @Override
     public String toString() {
-        return "Doctor: " + navn;
+        return navn + "\n";
     }
 
     @Override
