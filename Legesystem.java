@@ -51,7 +51,26 @@ public class Legesystem {
 
     public static void leggTilNy() {
         Scanner tastatur = new Scanner(System.in);
-        System.out.println("Hva");
+        String leggTilMeny = "Hva vil du legge til?" +
+                            "1: Lege" +
+                            "2: Pasient" +
+                            "3: Legemiddel" +
+                            "4: Resept" +
+                            "5: Tilbake til hovedmeny" +
+                            "Tast ønsker menynummer og avslutt med ENTER." +
+                            "> ";
+        String menyvalg = "";
+
+        while (!menyvalg.equals("5"))    {
+            System.out.print(leggTilMeny);
+            menyvalg = tastatur.nextLine();
+            if (menyvalg.equals("1"))   {leggTilLege();}
+            else if (menyvalg.equsls("2"))   {leggTilPasient();}
+            else if (menyvalg.equals("3"))   {leggTilLegemiddel();}
+            else if (menyvalg.equals("4"))   {leggTilResept();}
+            else if (menyvalg.equals("5"))   {hovedmeny();}
+            else {System.out.println("Feil. Input maa være et tall mellom 1 og 5. Prov igjen. \n");}
+        }
 
     }
 
