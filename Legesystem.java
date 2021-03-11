@@ -70,6 +70,25 @@ public class Legesystem {
             else if (menyvalg.equals("5"))   {hovedmeny();}
             else {System.out.println("Feil. Input maa være et tall mellom 1 og 5. Prov igjen. \n");}
         }
+    }
+
+    public static void leggTilResept() {
+        Scanner tastatur = new Scanner(System.in);
+        boolean gyldigLege = false;
+
+        while (! gyldigLege) {
+            System.out.println("Oppgi navn paa legen: ");
+            String legeNavn = tastatur.nextLine();
+
+            for (Lege lege : leger) {
+                if (lege.hentNavn().equals(legeNavn)) {
+                    gyldigLege = true;
+                }
+            }
+            if (!gyldigLege) {
+                System.out.println("Fant ikke legen, prov paa nytt");
+            }
+        }
 
     }
 
