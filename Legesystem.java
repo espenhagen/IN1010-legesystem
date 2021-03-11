@@ -17,7 +17,7 @@ public class Legesystem {
 
     public static void main(String[] args) throws FormatException, UlovligUtskrift {
         lesInnObjekterFil("storTestfil.txt");
-        leggTilPasient();
+        leggTilLege();
         hovedmeny();
     }
 
@@ -56,26 +56,32 @@ public class Legesystem {
     }
 
 	public static void leggTilLege() {
-		Scanner input = new Scanner (System.in); //Lager scanner-objekt
-		System.out.println("Vil du ha lege eller spesialist? ")
-		String legeType = input.nextLine(); //Leser input
+		Scanner input = new Scanner(System.in); //Lager scanner-objekt
 
-		Scanner input2 = new Scanner(System.in);
-		System.out.println("Skriv inn navnet på legen/spesialisten: ");
-		String legeNavn = input2.nextLine();
+        boolean gyldig = false;
+        while (!gyldig) {
+            System.out.println("Vil du ha lege eller spesialist? ");
+            String legeType = input.nextLine(); //Leser input
 
+            System.out.println("Skriv inn navnet paa legen/spesialisten: ");
+            String legeNavn = input.nextLine();
 
-		if (legeType.equalsIgnoreCase("Lege")) {
-			Lege lege = new Lege(legeNavn);
-		} else {
-			if (legeType.equalsIgnoreCase("Spesialist")) {
-				Scanner input3 = new Scanner(System.in);
-				System.out.println("Skriv inn spesialistens kontrollid: ");
-				String kontrollid = input3.nextLine();
+    		if (legeType.equalsIgnoreCase("lege")) {
+    			Lege lege = new Lege(legeNavn);
+                leger.leggTil(lege);
+                gyldig = true;
+    		}
+            else {
+    			if (legeType.equalsIgnoreCase("Spesialist")) {
+    				System.out.println("Skriv inn spesialistens kontrollid: ");
+    				String kontrollid = input.nextLine();
 
-				Spesialist spes = new Spesialist(legeNavn, kontrollid);
-			}
-		}
+    				Spesialist spes = new Spesialist(legeNavn, kontrollid);
+                    leger.leggTil(spes);
+                    gyldig = true;
+    			}
+    		}
+        }
 	}
 
     public static void leggTilPasient() {
@@ -84,7 +90,7 @@ public class Legesystem {
         String navn = "";
         String foedselsNummer = "";
 
-        while(!gyldig) {
+        while (!gyldig) {
             System.out.println("Oppgi navn paa pasient: ");
             navn = tastatur.nextLine();
 
