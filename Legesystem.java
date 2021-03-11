@@ -24,14 +24,14 @@ public class Legesystem {
         System.out.println(leger);
         System.out.println("NÅ KOMMER DET");
         System.out.println(resepter);
-        hovedmeny();
+        // hovedmeny();
     }
 
     public static void hovedmeny()  {
         String hovedmeny = "\nHovedmeny: " +
-                           "\n1: Skrive ut en fullstend oversikt over " +
+                           "\n1: Skrive ut en fullstendig oversikt over " +
                            "leger, resepter og legemidler." +
-                           "\n2: Legg til ny lege, pasient, legemidel eller resept." +
+                           "\n2: Legg til ny lege, pasient, legemiddel eller resept." +
                            "\n3: Bruk resept." +
                            "\n4: Vis statistikk." +
                            "\n5: Skriv alle data til fil." +
@@ -39,20 +39,20 @@ public class Legesystem {
                            "\nVelg handling:" +
                            "\nTast inn menynummer og avslutt med ENTER. \n>";
         Scanner tastatur = new Scanner(System.in);
-        int input = 0;
+        String input = "";
 
-    while (input != 6)   {
-        System.out.print(hovedmeny);
-        input = tastatur.nextInt();
-        if (input == 1) {}
-        else if (input == 2)    {}
-        else if (input == 3)    {}
-        else if (input == 4)    {}
-        else if (input == 5)    {}
-        else if (input == 6)    {System.exit(0);}
-        else {System.out.println("Feil. Input maa være et tall mellom 1 og 6. Prov igjen. \n");}
+        while (input != "6")   {
+            System.out.print(hovedmeny);
+            input = tastatur.nextLine();
+            if (input.equals("1")) {}
+            else if (input.equals("2"))   {}
+            else if (input.equals("3"))   {}
+            else if (input.equals("4"))   {}
+            else if (input.equals("5"))   {}
+            else if (input.equals("6"))    {System.exit(0);}
+            else {System.out.println("Feil. Input maa vaere et tall mellom 1 og 6. Prov igjen. \n");}
 
-    } //end while
+        } //end while
     }
 
     public static void lesInnObjekterFil(String filnavn) throws FormatException, UlovligUtskrift {
@@ -83,25 +83,31 @@ public class Legesystem {
                 String[] biter = linje.split(",");
 
                 while (!biter[0].contains("#"))   {
-                    String navn = biter[0];
-                    String type = biter[1];
-                    int pris = Integer.parseInt(biter[2]);
-                    double virkestoff = Double.parseDouble(biter[3]);
 
-                    if (type.equals("vanlig")) {
-                        legemidler.leggTil(new Vanlig(navn, pris, virkestoff));
-                    }
+                    try {
+                        String navn = biter[0];
+                        String type = biter[1];
+                        int pris = (int) Double.parseDouble(biter[2]);
+                        double virkestoff = Double.parseDouble(biter[3]);
 
-                    else if (type.equals("vanedannende")) {
-                        int styrke = Integer.parseInt(biter[4]);
-                        legemidler.leggTil(new Vanedannende(navn, pris, virkestoff, styrke));
+                        if (type.equals("vanlig")) {
+                            legemidler.leggTil(new Vanlig(navn, pris, virkestoff));
+                        }
+
+                        else if (type.equals("vanedannende")) {
+                            int styrke = Integer.parseInt(biter[4]);
+                            legemidler.leggTil(new Vanedannende(navn, pris, virkestoff, styrke));
+                        }
+                        else if (type.equals("narkotisk")) {
+                            int styrke = Integer.parseInt(biter[4]);
+                            legemidler.leggTil(new Narkotisk(navn, pris, virkestoff, styrke));
+                        }
+                        else {
+                            throw new FormatException("Feil format på input.");
+                        }
                     }
-                    else if (type.equals("narkotisk")) {
-                        int styrke = Integer.parseInt(biter[4]);
-                        legemidler.leggTil(new Narkotisk(navn, pris, virkestoff, styrke));
-                    }
-                    else {
-                        throw new FormatException("Feil format på input.");
+                    catch(Exception e) {
+                        // System.out.println("Feil i format");
                     }
 
                     linje = fil.nextLine();
@@ -146,52 +152,60 @@ public class Legesystem {
     } //end method lesInnObjekterFil()
 
     public static void skrivResepter(String[] biter) throws UlovligUtskrift {
-        int legemiddelNummer = Integer.parseInt(biter[0]);
-        String legeNavn = biter[1];
-        int pasientId = Integer.parseInt(biter[2]);
-        String type = biter[3];
+        try {
+            int legemiddelNummer = Integer.parseInt(biter[0]);
+            String legeNavn = biter[1];
+            int pasientId = Integer.parseInt(biter[2]);
+            String type = biter[3];
 
-        Pasient pasient = null;
-        Lege lege = null;
-        Legemiddel legemiddel = null;
+            Pasient pasient = null;
+            Lege lege = null;
+            Legemiddel legemiddel = null;
 
-        for (Pasient pas : pasienter) {
-            if (pas.hentId() == pasientId) {
-                pasient = pas;
+            for (Pasient pas : pasienter) {
+                if (pas.hentId() == pasientId) {
+                    pasient = pas;
+                }
             }
-        }
 
-        for (Lege doc : leger) {
-            if (doc.hentNavn().equals(legeNavn)) {
-                System.out.println(doc.hentNavn());
-                lege = doc;
+            for (Lege doc : leger) {
+                if (doc.hentNavn().equals(legeNavn)) {
+                    lege = doc;
+                }
             }
-        }
 
-        for (Legemiddel middel : legemidler) {
-            if (middel.hentId() == legemiddelNummer) {
-                legemiddel = middel;
+            for (Legemiddel middel : legemidler) {
+                if (middel.hentId() == legemiddelNummer) {
+                    legemiddel = middel;
+                }
             }
-        }
 
-        if (type.equals("blaa")) {
-            int reit = Integer.parseInt(biter[4]);
-            resepter.leggTil(lege.skrivBlaaResept(legemiddel, pasient, reit));
-        }
+            if (legemiddel != null && lege != null && pasient != null) {
 
-        if (type.equals("hvit")) {
-            int reit = Integer.parseInt(biter[4]);
-            resepter.leggTil(lege.skrivHvitResept(legemiddel, pasient, reit));
-        }
+                if (type.equals("blaa")) {
+                    int reit = Integer.parseInt(biter[4]);
+                    resepter.leggTil(lege.skrivBlaaResept(legemiddel, pasient, reit));
+                }
 
-        // SKRIVEFEIL i testfiler og obligtekster
-        if (type.equals("militaer") || type.equals("millitaer")) {
-            int reit = Integer.parseInt(biter[4]);
-            resepter.leggTil(lege.skrivMilitaerResept(legemiddel, pasient, reit));
-        }
+                if (type.equals("hvit")) {
+                    int reit = Integer.parseInt(biter[4]);
+                    resepter.leggTil(lege.skrivHvitResept(legemiddel, pasient, reit));
+                }
 
-        if (type.equals("p")) {
-            resepter.leggTil(lege.skrivPResept(legemiddel, pasient));
+                // SKRIVEFEIL i testfiler og obligtekster
+                if (type.equals("militaer") || type.equals("millitaer")) {
+                    int reit = Integer.parseInt(biter[4]);
+                    resepter.leggTil(lege.skrivMilitaerResept(legemiddel, pasient, reit));
+                }
+
+                if (type.equals("p")) {
+                    resepter.leggTil(lege.skrivPResept(legemiddel, pasient));
+                }
+            }
+
+        }
+        catch(Exception e) {
+            // System.out.println("Feil i format");
         }
     }
 

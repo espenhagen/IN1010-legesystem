@@ -42,8 +42,6 @@ public class Pasient {
 
     @Override
     public String toString() {
-        return "\nNavn: " + navn
-               + "\nFoedselsnummer: " + foedselsNummer
-               + "\nPasient ID: " + pasientId;
+        return pasientId + ": " + navn + " (fnr " + foedselsNummer + ")\n";
     }
 }

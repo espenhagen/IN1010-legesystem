@@ -19,6 +19,6 @@ public class PResept extends HvitResept {
 
     @Override
     public String toString() {
-        return "\nType: Hvit P-Resept" + super.toString();
+        return super.toString();
     }
 }

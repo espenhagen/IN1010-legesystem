@@ -10,7 +10,7 @@ abstract public class Resept {
     protected int id;
     protected Legemiddel legemiddel;
     protected Lege utskrivendeLege;
-    protected int pasientId, reit;
+    protected int reit;
 	protected Pasient pasient;
 
     public Resept(Legemiddel middel, Lege lege, Pasient pas, int rei) {
@@ -59,11 +59,6 @@ abstract public class Resept {
     // Informasjon om resepten
     @Override
     public String toString() {
-        return "\n ********** RESEPT *********\n" +
-        "\nId: " + id
-        + "\nLegemiddel: " + legemiddel.hentNavn()
-        + "\nLege: " + utskrivendeLege
-        + "\nAntall reit igjen: " + reit
-        + "\nPasient: " + pasient;
+        return "\n" + id + ": " + legemiddel.hentNavn() + " (" + reit + " reit)\n";
     }
 }
