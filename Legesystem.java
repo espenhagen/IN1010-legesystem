@@ -17,14 +17,8 @@ public class Legesystem {
 
     public static void main(String[] args) throws FormatException, UlovligUtskrift {
         lesInnObjekterFil("storTestfil.txt");
-        System.out.println(pasienter);
-        System.out.println();
-        System.out.println(legemidler);
-        System.out.println();
-        System.out.println(leger);
-        System.out.println("NÅ KOMMER DET");
-        System.out.println(resepter);
-        // hovedmeny();
+        leggTilPasient();
+        hovedmeny();
     }
 
     public static void hovedmeny()  {
@@ -44,8 +38,8 @@ public class Legesystem {
         while (input != "6")   {
             System.out.print(hovedmeny);
             input = tastatur.nextLine();
-            if (input.equals("1")) {}
-            else if (input.equals("2"))   {}
+            if (input.equals("1")) {skrivOversikt();}
+            else if (input.equals("2"))   {leggTilNy();}
             else if (input.equals("3"))   {}
             else if (input.equals("4"))   {}
             else if (input.equals("5"))   {}
@@ -53,6 +47,51 @@ public class Legesystem {
             else {System.out.println("Feil. Input maa vaere et tall mellom 1 og 6. Prov igjen. \n");}
 
         } //end while
+    } // end method hovedmeny()
+
+    public static void leggTilNy() {
+        Scanner tastatur = new Scanner(System.in);
+        System.out.println("Hva");
+
+    }
+
+    public static void leggTilPasient() {
+        Scanner tastatur = new Scanner(System.in);
+        boolean gyldig = false;
+        String navn = "";
+        String foedselsNummer = "";
+
+        while(!gyldig) {
+            System.out.println("Oppgi navn paa pasient: ");
+            navn = tastatur.nextLine();
+
+            System.out.println("Oppgi foedselsNummer: ");
+            foedselsNummer = tastatur.nextLine();
+
+            if (!navn.isEmpty() && !foedselsNummer.isEmpty()) {
+                gyldig = true;
+            }
+            else {
+                System.out.println("Prov paa nytt");
+            }
+        }
+
+        Pasient pasient = new Pasient(navn, foedselsNummer);
+        pasienter.leggTil(pasient);
+    }
+
+    public static void skrivOversikt() {
+        System.out.println("PASIENTER");
+        System.out.println(pasienter);
+
+        System.out.println("LEGEMIDLER");
+        System.out.println(legemidler);
+
+        System.out.println("LEGER");
+        System.out.println(leger);
+
+        System.out.println("RESEPTER");
+        System.out.println(resepter);
     }
 
     public static void lesInnObjekterFil(String filnavn) throws FormatException, UlovligUtskrift {
