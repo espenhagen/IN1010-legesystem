@@ -92,6 +92,65 @@ public class Legesystem {
 
     }
 
+	public static void leggTilLegemiddel() {
+		Scanner input = new Scanner();
+
+		boolean gyldig = false;
+		while (!gyldig) {
+			System.out.println("Oppgi type legemiddel (Vanlig/Vanedannende/Narkotisk): ");
+			String middelType = input.nextLine();
+
+			System.out.println("Oppgi navn på legemiddelet: ");
+			String navn = input.nextLine();
+
+			System.out.println("Oppgi pris på legemiddelet: ");
+			try {
+				int pris = input.nextLine();
+			} catch(NumberFormatException e) {
+				System.out.println("Feil format!");
+				return;
+			}
+
+			System.out.println("Oppgi virkestoff på legemiddelet");
+			try {
+				double virkestoff = input.nextLine();
+			} catch(Exception e) {
+				System.out.println("Feil format!");
+				return;
+			}
+
+			if (middelType.equalsIgnoreCase("vanlig")) {
+				Vanlig vanlig = new Vanlig(navn, pris, virkestoff);
+				legemidler.leggTil(vanlig);
+				gyldig = true;
+
+			} else if (middelType.equalsIgnoreCase("vanedannende")) {
+				System.out.println("Oppgi styrke på legemiddelet");
+				try {
+					int styrk = input.nextLine();
+				} catch(Exception e) {
+					System.out.println("Feil format!");
+					return;
+				}
+				Vanedannende vane = new Vanedannende(navn, pris, virkestoff, styrk);
+				legemidler.leggTil(vane);
+				gyldig = true;
+
+			} else if (middelType.equalsIgnoreCase("Narkotisk")) {
+				System.out.println("Oppgi styrke på legemiddelet");
+				try {
+					int styrk = input.nextLine();
+				} catch(Exception e) {
+					System.out.println("Feil format!");
+					return;
+				}
+				Narkotisk nark = new Narkotisk(navn, pris, virkestoff, styrk);
+				legemidler.leggTil(nark);
+				gyldig = true;
+			}
+		}
+	}
+
 	public static void leggTilLege() {
 		Scanner input = new Scanner(System.in); //Lager scanner-objekt
 
