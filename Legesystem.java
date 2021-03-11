@@ -55,6 +55,29 @@ public class Legesystem {
 
     }
 
+	public static void leggTilLege() {
+		Scanner input = new Scanner (System.in); //Lager scanner-objekt
+		System.out.println("Vil du ha lege eller spesialist? ")
+		String legeType = input.nextLine(); //Leser input
+
+		Scanner input2 = new Scanner(System.in);
+		System.out.println("Skriv inn navnet på legen/spesialisten: ");
+		String legeNavn = input2.nextLine();
+
+
+		if (legeType.equalsIgnoreCase("Lege")) {
+			Lege lege = new Lege(legeNavn);
+		} else {
+			if (legeType.equalsIgnoreCase("Spesialist")) {
+				Scanner input3 = new Scanner(System.in);
+				System.out.println("Skriv inn spesialistens kontrollid: ");
+				String kontrollid = input3.nextLine();
+
+				Spesialist spes = new Spesialist(legeNavn, kontrollid);
+			}
+		}
+	}
+
     public static void leggTilPasient() {
         Scanner tastatur = new Scanner(System.in);
         boolean gyldig = false;
