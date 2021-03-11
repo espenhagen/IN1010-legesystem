@@ -19,7 +19,37 @@ static Lenkeliste<Resept> resepter = new Lenkeliste<>();
 public static void main(String[] args) {
     lesInnObjekterFil("pasienter.txt");
     System.out.println(pasienter);
-}
+    hovedmeny();
+} //end main
+
+
+public static void hovedmeny()  {
+    String hovedmeny = "\nHovedmeny: " +
+                       "\n1: Skrive ut en fullstend oversikt over " +
+                       "leger, resepter og legemidler." +
+                       "\n2: Legg til ny lege, pasient, legemidel eller resept." +
+                       "\n3: Bruk resept." +
+                       "\n4: Vis statistikk." +
+                       "\n5: Skriv alle data til fil." +
+                       "\n6: Avslutt." +
+                       "\nVelg handling:" +
+                       "\nTast inn menynummer og avslutt med ENTER. \n>";
+    Scanner tastatur = new Scanner(System.in);
+    int input = 0;
+
+    while (input != 6)   {
+        System.out.print(hovedmeny);
+        input = tastatur.nextInt();
+        if (input == 1) {}
+        else if (input == 2)    {}
+        else if (input == 3)    {}
+        else if (input == 4)    {}
+        else if (input == 5)    {}
+        else if (input == 6)    {System.exit(0);}
+        else {System.out.println("Feil. Input maa være et tall mellom 1 og 6. Prov igjen. \n");}
+    }
+} //end method hovedmeny()
+
 
 public static void lesInnObjekterFil(String filnavn)   {
     Scanner fil = null;
