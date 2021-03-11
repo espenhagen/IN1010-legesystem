@@ -65,8 +65,8 @@ public class Legesystem {
             menyvalg = tastatur.nextLine();
             if (menyvalg.equals("1"))   {leggTilLege();}
             else if (menyvalg.equals("2"))   {leggTilPasient();}
-            // else if (menyvalg.equals("3"))   {leggTilLegemiddel();}
-            // else if (menyvalg.equals("4"))   {leggTilResept();}
+            else if (menyvalg.equals("3"))   {leggTilLegemiddel();}
+            else if (menyvalg.equals("4"))   {leggTilResept();}
             else if (menyvalg.equals("5"))   {hovedmeny();}
             else {System.out.println("Feil. Input maa være et tall mellom 1 og 5. Prov igjen. \n");}
         }
@@ -75,13 +75,21 @@ public class Legesystem {
     public static void leggTilResept() {
         Scanner tastatur = new Scanner(System.in);
         boolean gyldigLege = false;
+        boolean gyldigLegemiddel = false;
+        boolean gyldigPasient = false;
+
+        Lege lege = null;
+        Legemiddel legemiddel = null;
+        Pasient pasient = null;
+        int pasientId = 0;
 
         while (! gyldigLege) {
             System.out.println("Oppgi navn paa legen: ");
             String legeNavn = tastatur.nextLine();
 
-            for (Lege lege : leger) {
-                if (lege.hentNavn().equals(legeNavn)) {
+            for (Lege doc : leger) {
+                if (doc.hentNavn().equals(legeNavn)) {
+                    lege = doc;
                     gyldigLege = true;
                 }
             }
@@ -90,31 +98,56 @@ public class Legesystem {
             }
         }
 
+        while (! gyldigPasient) {
+            System.out.println("Oppgi id paa pasienten: ");
+
+            try {
+                pasientId = Integer.parseInt(tastatur.nextLine());
+            } catch(NumberFormatException e) {
+                System.out.println("Ugyldig id");
+                return;
+            }
+
+            for (Pasient pas : pasienter) {
+                if (pas.hentId() == pasientId) {
+                    pasient = pas;
+                    gyldigPasient = true;
+                }
+            }
+            if (!gyldigPasient) {
+                System.out.println("Fant ikke pasienten, prov paa nytt");
+            }
+        }
+
+        // MÅ HENTE LEGEMIDDEL
     }
 
 	public static void leggTilLegemiddel() {
-		Scanner input = new Scanner();
+		Scanner input = new Scanner(System.in);
+        int pris = 0;
+        double virkestoff = 0;
+        int styrk = 0;
 
 		boolean gyldig = false;
 		while (!gyldig) {
 			System.out.println("Oppgi type legemiddel (Vanlig/Vanedannende/Narkotisk): ");
 			String middelType = input.nextLine();
 
-			System.out.println("Oppgi navn på legemiddelet: ");
+			System.out.println("Oppgi navn paa legemiddelet: ");
 			String navn = input.nextLine();
 
-			System.out.println("Oppgi pris på legemiddelet: ");
+			System.out.println("Oppgi pris paa legemiddelet: ");
 			try {
-				int pris = input.nextLine();
+				pris = Integer.parseInt(input.nextLine());
 			} catch(NumberFormatException e) {
 				System.out.println("Feil format!");
 				return;
 			}
 
-			System.out.println("Oppgi virkestoff på legemiddelet");
+			System.out.println("Oppgi virkestoff paa legemiddelet: ");
 			try {
-				double virkestoff = input.nextLine();
-			} catch(Exception e) {
+				virkestoff = Double.parseDouble(input.nextLine());
+			} catch(NumberFormatException e) {
 				System.out.println("Feil format!");
 				return;
 			}
@@ -125,10 +158,10 @@ public class Legesystem {
 				gyldig = true;
 
 			} else if (middelType.equalsIgnoreCase("vanedannende")) {
-				System.out.println("Oppgi styrke på legemiddelet");
+				System.out.println("Oppgi styrke paa legemiddelet: ");
 				try {
-					int styrk = input.nextLine();
-				} catch(Exception e) {
+					styrk = Integer.parseInt(input.nextLine());
+				} catch(NumberFormatException e) {
 					System.out.println("Feil format!");
 					return;
 				}
@@ -137,10 +170,10 @@ public class Legesystem {
 				gyldig = true;
 
 			} else if (middelType.equalsIgnoreCase("Narkotisk")) {
-				System.out.println("Oppgi styrke på legemiddelet");
+				System.out.println("Oppgi styrke paa legemiddelet: ");
 				try {
-					int styrk = input.nextLine();
-				} catch(Exception e) {
+					styrk = Integer.parseInt(input.nextLine());
+				} catch(NumberFormatException e) {
 					System.out.println("Feil format!");
 					return;
 				}
