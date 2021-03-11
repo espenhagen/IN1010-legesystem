@@ -17,7 +17,6 @@ public class Legesystem {
 
     public static void main(String[] args) throws FormatException, UlovligUtskrift {
         lesInnObjekterFil("storTestfil.txt");
-        leggTilLege();
         hovedmeny();
     }
 
@@ -35,7 +34,7 @@ public class Legesystem {
         Scanner tastatur = new Scanner(System.in);
         String input = "";
 
-        while (input != "6")   {
+        while (!input.equals("6"))   {
             System.out.print(hovedmeny);
             input = tastatur.nextLine();
             if (input.equals("1")) {skrivOversikt();}
@@ -51,23 +50,23 @@ public class Legesystem {
 
     public static void leggTilNy() {
         Scanner tastatur = new Scanner(System.in);
-        String leggTilMeny = "Hva vil du legge til?" +
-                            "1: Lege" +
-                            "2: Pasient" +
-                            "3: Legemiddel" +
-                            "4: Resept" +
-                            "5: Tilbake til hovedmeny" +
-                            "Tast ønsker menynummer og avslutt med ENTER." +
-                            "> ";
+        String leggTilMeny = "\nHva vil du legge til?" +
+                            "\n1: Lege" +
+                            "\n2: Pasient" +
+                            "\n3: Legemiddel" +
+                            "\n4: Resept" +
+                            "\n5: Tilbake til hovedmeny" +
+                            "\nTast onsket menynummer og avslutt med ENTER." +
+                            "\n> ";
         String menyvalg = "";
 
         while (!menyvalg.equals("5"))    {
             System.out.print(leggTilMeny);
             menyvalg = tastatur.nextLine();
             if (menyvalg.equals("1"))   {leggTilLege();}
-            else if (menyvalg.equsls("2"))   {leggTilPasient();}
-            else if (menyvalg.equals("3"))   {leggTilLegemiddel();}
-            else if (menyvalg.equals("4"))   {leggTilResept();}
+            else if (menyvalg.equals("2"))   {leggTilPasient();}
+            // else if (menyvalg.equals("3"))   {leggTilLegemiddel();}
+            // else if (menyvalg.equals("4"))   {leggTilResept();}
             else if (menyvalg.equals("5"))   {hovedmeny();}
             else {System.out.println("Feil. Input maa være et tall mellom 1 og 5. Prov igjen. \n");}
         }
