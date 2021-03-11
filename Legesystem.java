@@ -10,17 +10,17 @@ import java.io.*;
 
 public class Legesystem {
 
-    static Lenkeliste<Pasient> pasienter = new Lenkeliste<>();
-    static Lenkeliste<Legemiddel> legemidler = new Lenkeliste<>();
-    static SortertLenkeliste<Lege> leger = new SortertLenkeliste<>();
-    static Lenkeliste<Resept> resepter = new Lenkeliste<>();
+    static Lenkeliste<Pasient> pasienter = new Lenkeliste <>();
+    static Lenkeliste<Legemiddel> legemidler = new Lenkeliste <>();
+    static SortertLenkeliste<Lege> leger = new SortertLenkeliste <>();
+    static Lenkeliste<Resept> resepter = new Lenkeliste <>();
 
     public static void main(String[] args) throws FormatException, UlovligUtskrift {
         lesInnObjekterFil("storTestfil.txt");
         hovedmeny();
     }
 
-    public static void hovedmeny()  {
+    public static void hovedmeny() throws UlovligUtskrift {
         String hovedmeny = "\nHovedmeny: " +
                            "\n1: Skrive ut en fullstendig oversikt over " +
                            "leger, resepter og legemidler." +
@@ -39,7 +39,7 @@ public class Legesystem {
             input = tastatur.nextLine();
             if (input.equals("1")) {skrivOversikt();}
             else if (input.equals("2"))   {leggTilNy();}
-            else if (input.equals("3"))   {}
+            else if (input.equals("3"))   {brukResept();}
             else if (input.equals("4"))   {}
             else if (input.equals("5"))   {}
             else if (input.equals("6"))    {System.exit(0);}
@@ -48,7 +48,66 @@ public class Legesystem {
         } //end while
     } // end method hovedmeny()
 
-    public static void leggTilNy() {
+    public static void brukResept() {
+        Scanner tastatur = new Scanner(System.in);
+
+        System.out.println("\nHvilken pasient vil du se resepter for?");
+        System.out.println(pasienter);
+        int id = 0;
+        Pasient pasient = null;
+
+        try {
+            id = Integer.parseInt(tastatur.nextLine());
+        } catch(NumberFormatException e) {
+            System.out.println("Feil format");
+            return;
+        }
+
+        for (Pasient pas : pasienter) {
+            if (pas.hentId() == id) {
+                pasient = pas;
+            }
+        }
+
+        if (pasient == null) {
+            System.out.println("Fant ikke pasienten");
+            return;
+        }
+
+        System.out.println("Hvilken resept vil du bruke?");
+        System.out.println(pasient.hentReseptStabel());
+        int reseptId = 0;
+        Resept resept = null;
+
+        try {
+            reseptId = Integer.parseInt(tastatur.nextLine());
+        } catch(NumberFormatException e) {
+            System.out.println("Feil format");
+            return;
+        }
+
+        for (Resept res : pasient.hentReseptStabel()) {
+            if (res.hentId() == reseptId) {
+                resept = res;
+            }
+        }
+
+        if (resept == null) {
+            System.out.println("Fant ikke resepten");
+            return;
+        }
+
+        if (resept.bruk()) {
+            System.out.println("Brukte resept paa " + resept.hentLegemiddel().hentNavn() + ". Antall gjenvaerende reit: "
+            + resept.hentReit());
+        }
+        else {
+            System.out.println("Kunne ikke bruke resept paa " + resept.hentLegemiddel().hentNavn()
+            + " (ingen gjenvaerende reit).");
+        }
+    }
+
+    public static void leggTilNy() throws UlovligUtskrift {
         Scanner tastatur = new Scanner(System.in);
         String leggTilMeny = "\nHva vil du legge til?" +
                             "\n1: Lege" +
@@ -72,16 +131,18 @@ public class Legesystem {
         }
     }
 
-    public static void leggTilResept() {
+    public static void leggTilResept() throws UlovligUtskrift {
         Scanner tastatur = new Scanner(System.in);
         boolean gyldigLege = false;
         boolean gyldigLegemiddel = false;
         boolean gyldigPasient = false;
+        boolean gyldig = false;
 
         Lege lege = null;
         Legemiddel legemiddel = null;
         Pasient pasient = null;
         int pasientId = 0;
+        int legemiddelId = 0;
 
         while (! gyldigLege) {
             System.out.println("Oppgi navn paa legen: ");
@@ -119,7 +180,82 @@ public class Legesystem {
             }
         }
 
-        // MÅ HENTE LEGEMIDDEL
+        while (! gyldigLegemiddel) {
+            System.out.println("Oppgi legemiddel id: ");
+
+            try {
+                legemiddelId = Integer.parseInt(tastatur.nextLine());
+            } catch(NumberFormatException e) {
+                System.out.println("Ugyldig id");
+                return;
+            }
+
+            for (Legemiddel middel : legemidler) {
+                if (middel.hentId() == legemiddelId) {
+                    legemiddel = middel;
+                    gyldigLegemiddel = true;
+                }
+            }
+            if (!gyldigLegemiddel) {
+                System.out.println("Fant ikke legemiddelet, prov paa nytt");
+            }
+        }
+
+        while (! gyldig) {
+
+            System.out.println("Oppgi type paa resept (hvit / blaa / militaer / p-resept): ");
+            String type = tastatur.nextLine();
+
+            if (type.equalsIgnoreCase("hvit")) {
+                System.out.println("Oppgi antall reit: ");
+                int reit = 0;
+
+                try {
+                    reit = Integer.parseInt(tastatur.nextLine());
+                } catch(NumberFormatException e) {
+                    System.out.println("Feil format");
+                    return;
+                }
+
+                lege.skrivHvitResept(legemiddel, pasient, reit);
+                gyldig = true;
+            }
+
+            else if (type.equalsIgnoreCase("militaer")) {
+                System.out.println("Oppgi antall reit: ");
+                int reit = 0;
+
+                try {
+                    reit = Integer.parseInt(tastatur.nextLine());
+                } catch(NumberFormatException e) {
+                    System.out.println("Feil format");
+                    return;
+                }
+
+                lege.skrivMilitaerResept(legemiddel, pasient, reit);
+                gyldig = true;
+            }
+
+            else if (type.equalsIgnoreCase("p-resept")) {
+                lege.skrivPResept(legemiddel, pasient);
+                gyldig = true;
+            }
+
+            else if (type.equalsIgnoreCase("blaa")) {
+                System.out.println("Oppgi antall reit: ");
+                int reit = 0;
+
+                try {
+                    reit = Integer.parseInt(tastatur.nextLine());
+                } catch(NumberFormatException e) {
+                    System.out.println("Feil format");
+                    return;
+                }
+
+                lege.skrivBlaaResept(legemiddel, pasient, reit);
+                gyldig = true;
+            }
+        }
     }
 
 	public static void leggTilLegemiddel() {
