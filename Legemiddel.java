@@ -40,12 +40,14 @@ abstract public class Legemiddel {
         pris = ny;
     }
 
+    public abstract String hentType();
+
     // toString som returnerer en brukervennlig streng om informasjonen til legemiddelet
     @Override
     public String toString() {
         return "Id: " + id
-        + "\nNavn: " + navn
-        + "\nPris: " + pris
-        + "\nVirkestoff: " + virkestoff;
+        + ", Type: " + hentType()
+        + ", Navn: " + navn
+        + ", Pris: " + pris + "\n";
     }
 }

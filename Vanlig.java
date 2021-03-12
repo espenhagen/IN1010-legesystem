@@ -11,6 +11,11 @@ public class Vanlig extends Legemiddel {
 
     @Override
     public String toString() {
-        return "Type legemiddel: Vanlig\n" + super.toString() + "\n";
+        return super.toString();
+    }
+
+    @Override
+    public String hentType() {
+        return "vanlig";
     }
 }

@@ -21,4 +21,9 @@ public class HvitResept extends Resept {
     public String toString() {
         return super.toString();
     }
+
+    @Override
+    public String hentType() {
+        return "hvit";
+    }
 }

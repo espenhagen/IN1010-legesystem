@@ -56,9 +56,11 @@ abstract public class Resept {
 
     abstract public int prisAaBetale();
 
+    abstract public String hentType();
+
     // Informasjon om resepten
     @Override
     public String toString() {
-        return "\n" + id + ": " + legemiddel.hentNavn() + " (" + reit + " reit)\n";
+        return id + ": " + legemiddel.hentNavn() + " (" + reit + " reit)\n";
     }
 }

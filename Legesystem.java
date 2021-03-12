@@ -40,13 +40,152 @@ public class Legesystem {
             if (input.equals("1")) {skrivOversikt();}
             else if (input.equals("2"))   {leggTilNy();}
             else if (input.equals("3"))   {brukResept();}
-            else if (input.equals("4"))   {}
-            else if (input.equals("5"))   {}
+            else if (input.equals("4"))   {visStatistikk();}
+            else if (input.equals("5"))   {skrivTilFil();}
             else if (input.equals("6"))    {System.exit(0);}
             else {System.out.println("Feil. Input maa vaere et tall mellom 1 og 6. Prov igjen. \n");}
 
         } //end while
     } // end method hovedmeny()
+
+    public static void skrivTilFil() {
+        Scanner tastatur = new Scanner(System.in);
+        System.out.print("Oppgi filnavn:\n-> ");
+        String filnavn = tastatur.nextLine();
+
+
+        try {
+            PrintWriter skriver = new PrintWriter(filnavn);
+
+            skriver.println("# Pasienter (navn, fnr)");
+            for (Pasient pasient : pasienter) {
+                skriver.println(pasient.hentNavn() + "," + pasient.hentFoedselsnr());
+            }
+
+            skriver.println("# Legemidler (navn,type,pris,virkestoff,[styrke])");
+            for (Legemiddel legemiddel : legemidler) {
+                skriver.print(legemiddel.hentNavn() + ","
+                + legemiddel.hentType() + ","
+                + legemiddel.hentPris() + ","
+                + legemiddel.hentVirkestoff() + "," );
+
+                if (legemiddel instanceof Vanedannende) {
+                    Vanedannende vanedannende = (Vanedannende) legemiddel;
+                    skriver.println(vanedannende.hentVanedannendeStyrke());
+                }
+
+                else if (legemiddel instanceof Narkotisk) {
+                    Narkotisk narkotisk = (Narkotisk) legemiddel;
+                    skriver.println(narkotisk.hentNarkotiskStyrke());
+                }
+
+                else {
+                    skriver.println();
+                }
+            }
+
+            skriver.println("# Leger (navn,kontrollid / 0 hvis vanlig lege)");
+            for (Lege lege : leger) {
+                skriver.print(lege.hentNavn() + ",");
+                if (lege.erSpesialist()) {
+                    Spesialist spesialist = (Spesialist) lege;
+                    skriver.print(spesialist.hentKontrollID());
+                }
+                else {
+                    skriver.print(0);
+                }
+                skriver.println();
+            }
+
+            skriver.println("# Resepter (legemiddelNummer,legeNavn,pasientID,type,[reit])");
+            for (Resept resept : resepter) {
+                skriver.print(resept.hentLegemiddel().hentId() + ","
+                + resept.hentLege().hentNavn() + ","
+                + resept.hentPasient().hentId() + ","
+                + resept.hentType());
+
+                if (resept.hentType().equals("p")) {
+                    skriver.println();
+                }
+                else {
+                    skriver.println("," + resept.hentReit());
+                }
+            }
+
+            System.out.println("Din fil er naa skrevet til :)");
+            skriver.close();
+        }
+        catch(IOException e) {
+            System.out.println("Kan ikke skrive til fil.");
+        }
+
+    }
+
+    public static void visStatistikk() throws UlovligUtskrift {
+        Scanner tastatur = new Scanner(System.in);
+        String leggTilMeny = "\nHva vil du se statistikk over?" +
+                            "\n1: Utskrevne resepter paa vanedannende legemidler" +
+                            "\n2: Utskrevne resepter paa narkotiske legemidler" +
+                            "\n3: Leger som har skrevet ut narkotiske legemidler" +
+                            "\n4: Pasienter med gyldige resepter paa narkotiske legemidler" +
+                            "\n5: Tilbake til hovedmeny" +
+                            "\nTast onsket menynummer og avslutt med ENTER." +
+                            "\n> ";
+        String menyvalg = "";
+
+        while (!menyvalg.equals("5"))    {
+            System.out.print(leggTilMeny);
+            menyvalg = tastatur.nextLine();
+            if (menyvalg.equals("1"))   {skrivAntallVanedannende();}
+            else if (menyvalg.equals("2"))   {skrivAntallNarkotiske();}
+            else if (menyvalg.equals("3"))   {antallNarkotiskePerLege();}
+            else if (menyvalg.equals("4"))   {antallGyldigeNarktoiskePerPasient();}
+            else if (menyvalg.equals("5"))   {hovedmeny();}
+            else {System.out.println("Feil. Input maa være et tall mellom 1 og 5. Prov igjen. \n");}
+        }
+    }
+
+    public static void antallGyldigeNarktoiskePerPasient() {
+        for (Pasient pasient : pasienter) {
+            if (pasient.antallGyldigeNarktoiske() > 0) {
+                System.out.println(pasient.hentNavn() + ", antall gyldige resepter paa narkotiske legemidler: " + pasient.antallGyldigeNarktoiske());
+            }
+        }
+    }
+
+    public static void antallNarkotiskePerLege() {
+        for (Lege lege : leger) {
+            if (lege.antallNarkotiske() > 0) {
+                System.out.println(lege.hentNavn() + ", antall narkotiske legemidler: " + lege.antallNarkotiske());
+            }
+        }
+    }
+
+    public static void skrivAntallVanedannende() {
+        int antall = 0;
+
+        for (Resept resept : resepter) {
+            Legemiddel legemiddel = resept.hentLegemiddel();
+            if (legemiddel instanceof Vanedannende) {
+                antall++;
+            }
+        }
+
+        System.out.println("Totalt antall utskrevne resepter paa vanedannende legemidler: " + antall);
+    }
+
+    public static void skrivAntallNarkotiske() {
+        int antall = 0;
+
+        for (Resept resept : resepter) {
+            Legemiddel legemiddel = resept.hentLegemiddel();
+            if (legemiddel instanceof Narkotisk) {
+                antall++;
+            }
+        }
+
+        System.out.println("Totalt antall utskrevne resepter paa narkotiske legemidler: " + antall);
+    }
 
     public static void brukResept() {
         Scanner tastatur = new Scanner(System.in);
@@ -217,7 +356,8 @@ public class Legesystem {
                     return;
                 }
 
-                lege.skrivHvitResept(legemiddel, pasient, reit);
+                Resept hvit = lege.skrivHvitResept(legemiddel, pasient, reit);
+                resepter.leggTil(hvit);
                 gyldig = true;
             }
 
@@ -232,12 +372,14 @@ public class Legesystem {
                     return;
                 }
 
-                lege.skrivMilitaerResept(legemiddel, pasient, reit);
+                Resept mili = lege.skrivMilitaerResept(legemiddel, pasient, reit);
+                resepter.leggTil(mili);
                 gyldig = true;
             }
 
             else if (type.equalsIgnoreCase("p-resept")) {
-                lege.skrivPResept(legemiddel, pasient);
+                Resept pRes = lege.skrivPResept(legemiddel, pasient);
+                resepter.leggTil(pRes);
                 gyldig = true;
             }
 
@@ -252,7 +394,8 @@ public class Legesystem {
                     return;
                 }
 
-                lege.skrivBlaaResept(legemiddel, pasient, reit);
+                Resept blaa = lege.skrivBlaaResept(legemiddel, pasient, reit);
+                resepter.leggTil(blaa);
                 gyldig = true;
             }
         }
@@ -337,7 +480,7 @@ public class Legesystem {
                 gyldig = true;
     		}
             else {
-    			if (legeType.equalsIgnoreCase("Spesialist")) {
+    			if (legeType.equalsIgnoreCase("spesialist")) {
     				System.out.println("Skriv inn spesialistens kontrollid: ");
     				String kontrollid = input.nextLine();
 
@@ -384,7 +527,7 @@ public class Legesystem {
         System.out.println("LEGER");
         System.out.println(leger);
 
-        System.out.println("RESEPTER");
+        System.out.println("\nRESEPTER");
         System.out.println(resepter);
     }
 

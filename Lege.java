@@ -10,6 +10,17 @@ public class Lege implements Comparable <Lege> {
         navn = nv;
     }
 
+    public int antallNarkotiske() {
+        int antall = 0;
+
+        for (Resept resept : utskrevedeResepter) {
+            if (erNarkotisk(resept.hentLegemiddel())) {
+                antall++;
+            }
+        }
+        return antall;
+    }
+
     public HvitResept skrivHvitResept(Legemiddel legemiddel, Pasient pasient, int reit) throws UlovligUtskrift {
         if (erNarkotisk(legemiddel) && !erSpesialist()) {
             throw new UlovligUtskrift(this, legemiddel, pasient.hentId());
@@ -54,7 +65,7 @@ public class Lege implements Comparable <Lege> {
         return blaa;
     }
 
-    private boolean erSpesialist() {
+    public boolean erSpesialist() {
         return this instanceof Spesialist;
     }
 

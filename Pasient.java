@@ -20,6 +20,18 @@ public class Pasient {
         pasientId = teller;
     }
 
+    // Antar at gyldig betyr at antall reit > 0 for resepten.
+    public int antallGyldigeNarktoiske() {
+        int antall = 0;
+
+        for (Resept resept : reseptStabel) {
+            if (resept.hentLegemiddel() instanceof Narkotisk && resept.hentReit() > 0) {
+                antall++;
+            }
+        }
+        return antall;
+    }
+
     public String hentNavn() {
         return navn;
     }

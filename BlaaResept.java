@@ -22,4 +22,9 @@ public class BlaaResept extends Resept {
     public String toString() {
         return super.toString();
     }
+
+    @Override
+    public String hentType() {
+        return "blaa";
+    }
 }
