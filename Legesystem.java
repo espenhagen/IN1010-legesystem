@@ -20,6 +20,7 @@ public class Legesystem {
         hovedmeny();
     }
 
+    // Skriver ut en hovedmeny som bruker kan navigere i
     public static void hovedmeny() throws UlovligUtskrift {
         String hovedmeny = "\nHovedmeny: " +
                            "\n1: Skrive ut en fullstendig oversikt over " +
@@ -45,9 +46,10 @@ public class Legesystem {
             else if (input.equals("6"))    {System.exit(0);}
             else {System.out.println("Feil. Input maa vaere et tall mellom 1 og 6. Prov igjen. \n");}
 
-        } //end while
+        }
     } // end method hovedmeny()
 
+    // Metoden skriver ut dataen i strukturen, til en ny fil som brukeren angir
     public static void skrivTilFil() {
         Scanner tastatur = new Scanner(System.in);
         System.out.print("Oppgi filnavn:\n-> ");
@@ -121,6 +123,7 @@ public class Legesystem {
 
     }
 
+    // Viser ulik statisikk over legemidler og bruk
     public static void visStatistikk() throws UlovligUtskrift {
         Scanner tastatur = new Scanner(System.in);
         String leggTilMeny = "\nHva vil du se statistikk over?" +
@@ -145,6 +148,7 @@ public class Legesystem {
         }
     }
 
+    // Henter antall gyldige narkotiske legemidler per pasient
     public static void antallGyldigeNarktoiskePerPasient() {
         for (Pasient pasient : pasienter) {
             if (pasient.antallGyldigeNarktoiske() > 0) {
@@ -153,6 +157,7 @@ public class Legesystem {
         }
     }
 
+    // Henter antall narkotiske utskrevede resepter for legene
     public static void antallNarkotiskePerLege() {
         for (Lege lege : leger) {
             if (lege.antallNarkotiske() > 0) {
@@ -161,6 +166,7 @@ public class Legesystem {
         }
     }
 
+    // Henter antall vanedannende legemidler i systemet
     public static void skrivAntallVanedannende() {
         int antall = 0;
 
@@ -174,6 +180,7 @@ public class Legesystem {
         System.out.println("Totalt antall utskrevne resepter paa vanedannende legemidler: " + antall);
     }
 
+    // Henter antall narkotiske legemidler i systemet
     public static void skrivAntallNarkotiske() {
         int antall = 0;
 
@@ -187,6 +194,7 @@ public class Legesystem {
         System.out.println("Totalt antall utskrevne resepter paa narkotiske legemidler: " + antall);
     }
 
+    // Forsøker å bruke en resept for valgt pasient
     public static void brukResept() {
         Scanner tastatur = new Scanner(System.in);
 
@@ -246,6 +254,7 @@ public class Legesystem {
         }
     }
 
+    // Undermeny for å legge til et nytt objekt i systemet
     public static void leggTilNy() throws UlovligUtskrift {
         Scanner tastatur = new Scanner(System.in);
         String leggTilMeny = "\nHva vil du legge til?" +
@@ -270,6 +279,7 @@ public class Legesystem {
         }
     }
 
+    // Legger til en ny resept, og håndterer unntak
     public static void leggTilResept() throws UlovligUtskrift {
         Scanner tastatur = new Scanner(System.in);
         boolean gyldigLege = false;
@@ -401,6 +411,7 @@ public class Legesystem {
         }
     }
 
+    // Legger til et ny legemiddel, og håndterer unntak
 	public static void leggTilLegemiddel() {
 		Scanner input = new Scanner(System.in);
         int pris = 0;
@@ -463,6 +474,7 @@ public class Legesystem {
 		}
 	}
 
+    // Legger til en ny lege, og håndterer unntak
 	public static void leggTilLege() {
 		Scanner input = new Scanner(System.in); //Lager scanner-objekt
 
@@ -492,6 +504,7 @@ public class Legesystem {
         }
 	}
 
+    // Legger til en ny pasient, og håndterer unntak
     public static void leggTilPasient() {
         Scanner tastatur = new Scanner(System.in);
         boolean gyldig = false;
@@ -517,6 +530,7 @@ public class Legesystem {
         pasienter.leggTil(pasient);
     }
 
+    // Skriver ut en fullstendig oversikt over dataen i systemet
     public static void skrivOversikt() {
         System.out.println("PASIENTER");
         System.out.println(pasienter);
@@ -531,6 +545,7 @@ public class Legesystem {
         System.out.println(resepter);
     }
 
+    // Leser inn fil og oppdaterer datastrukturen i systemet
     public static void lesInnObjekterFil(String filnavn) throws FormatException, UlovligUtskrift {
         Scanner fil = null;
         try {
@@ -627,6 +642,7 @@ public class Legesystem {
 
     } //end method lesInnObjekterFil()
 
+    // Hjelpemetode for lesInnObjekterFil(), og håndterer reseptene
     public static void skrivResepter(String[] biter) throws UlovligUtskrift {
         try {
             int legemiddelNummer = Integer.parseInt(biter[0]);
@@ -684,5 +700,4 @@ public class Legesystem {
             // System.out.println("Feil i format");
         }
     }
-
 } // end class Legesystem
