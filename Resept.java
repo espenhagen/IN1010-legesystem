@@ -6,16 +6,17 @@ Inneholder også to abstrakte metoder, farge() og prisAaBetale().
 */
 
 abstract public class Resept {
-    protected static int total;
+    protected static int total = 0;
     protected int id;
     protected Legemiddel legemiddel;
     protected Lege utskrivendeLege;
-    protected int pasientId, reit;
+    protected int reit;
+	protected Pasient pasient;
 
-    public Resept(Legemiddel middel, Lege lege, int pId, int rei) {
+    public Resept(Legemiddel middel, Lege lege, Pasient pas, int rei) {
         legemiddel = middel;
         utskrivendeLege = lege;
-        pasientId = pId;
+        pasient = pas;
         reit = rei;
 
         total++;
@@ -34,8 +35,8 @@ abstract public class Resept {
         return utskrivendeLege;
     }
 
-    public int pasientId() {
-        return pasientId;
+    public Pasient hentPasient() {
+        return pasient;
     }
 
     public int hentReit() {
@@ -55,13 +56,11 @@ abstract public class Resept {
 
     abstract public int prisAaBetale();
 
+    abstract public String hentType();
+
     // Informasjon om resepten
     @Override
     public String toString() {
-        return "\nId: " + id
-        + "\nLegemiddel: " + legemiddel.hentNavn()
-        + "\nLege: " + utskrivendeLege.hentNavn()
-        + "\nPasient ID: " + pasientId
-        + "\nAntall reit igjen: " + reit;
+        return id + ": " + legemiddel.hentNavn() + " (" + reit + " reit)\n";
     }
 }

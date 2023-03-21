@@ -5,8 +5,8 @@ Prisen som betales er full pris.
 
 public class HvitResept extends Resept {
 
-    public HvitResept(Legemiddel legemiddel, Lege utskrivendeLege, int pasientId, int reit) {
-        super(legemiddel, utskrivendeLege, pasientId, reit);
+    public HvitResept(Legemiddel legemiddel, Lege utskrivendeLege, Pasient pas, int reit) {
+        super(legemiddel, utskrivendeLege, pas, reit);
     }
 
     public String farge() {
@@ -19,8 +19,11 @@ public class HvitResept extends Resept {
 
     @Override
     public String toString() {
-        return "\nType: Hvit resept"
-        + "\nFarge: " + farge() + super.toString()
-        + "\nPris aa betale: " + prisAaBetale();
+        return super.toString();
+    }
+
+    @Override
+    public String hentType() {
+        return "hvit";
     }
 }

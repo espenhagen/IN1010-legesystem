@@ -5,8 +5,8 @@ Prisen som betales trekkes fra 108 kroner, men prisen blir aldri mindre enn 0.
 
 public class PResept extends HvitResept {
 
-    public PResept(Legemiddel legemiddel, Lege utskrivendeLege, int pasientId) {
-        super(legemiddel, utskrivendeLege, pasientId, 3);
+    public PResept(Legemiddel legemiddel, Lege utskrivendeLege, Pasient pas) {
+        super(legemiddel, utskrivendeLege, pas, 3);
     }
 
     @Override
@@ -19,6 +19,11 @@ public class PResept extends HvitResept {
 
     @Override
     public String toString() {
-        return "\nType: P-Resept" + super.toString();
+        return super.toString();
+    }
+
+    @Override
+    public String hentType() {
+        return "p";
     }
 }

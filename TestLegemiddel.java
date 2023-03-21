@@ -1,6 +1,6 @@
 /**
 TestLegemiddel inneholder en rekke metoder som tar imot Legemiddel-objekter og forventede
-verdier, for å verifiserer om faktisk reultat, stemmer med forventet resultat. 
+verdier, for å verifiserer om faktisk reultat, stemmer med forventet resultat.
 */
 
 public class TestLegemiddel {
@@ -15,7 +15,7 @@ public class TestLegemiddel {
         System.out.println("\nForventet virkestoff: 2.0\nStemmer det?: " + testLegemiddelVirkestoff(vanlig, 2.0));
 
         System.out.println("\nTEST AV VANLIG FERDIG, TESTER NARKOTISK:");
-
+ 
         Narkotisk nark = new Narkotisk("Drogas", 1000, 5.0, 40);
 
         System.out.println("\nForventet id: 2\nStemmer det?: " + testLegemiddelId(nark, 2));
